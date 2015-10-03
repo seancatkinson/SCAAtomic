@@ -12,10 +12,15 @@ A lightweight atomic wrapper in swift and C
 let atomicBool = Atomic(false)
 atomicBool.value = true
 let originalValue = atomicBool.performAndReplace { current in 
-    return true 
+    return false 
 }
-// originalValue = false
-// atomicBool.value = true
+// originalValue = true
+// atomicBool.value = false
+
+let mappedValue = atomicBool.map { (currentValue) -> Int in
+    return currentValue == true ? 1 : 0
+}
+// mappedValue = 0
 ```
 
 
