@@ -14,6 +14,7 @@
 		967751F21BBF324F008E30F9 /* PerformOnceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967751F11BBF324F008E30F9 /* PerformOnceTests.swift */; };
 		967751F41BBF3433008E30F9 /* AtomicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967751F31BBF3433008E30F9 /* AtomicTests.swift */; };
 		968F0B2B1B25A6F1000A4D3E /* SCAAtomic.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96E1DBEE1B19D58E000DBF49 /* SCAAtomic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		96C66A221BC905FA00D00F62 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C66A211BC905FA00D00F62 /* SpinLock.swift */; settings = {ASSET_TAGS = (); }; };
 		96E1DC391B1A0CE5000DBF49 /* SCAAtomic.h in Headers */ = {isa = PBXBuildFile; fileRef = 96E1DC381B1A0CE5000DBF49 /* SCAAtomic.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		967751EE1BBF2197008E30F9 /* PerformOnce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformOnce.swift; sourceTree = "<group>"; };
 		967751F11BBF324F008E30F9 /* PerformOnceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformOnceTests.swift; sourceTree = "<group>"; };
 		967751F31BBF3433008E30F9 /* AtomicTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicTests.swift; sourceTree = "<group>"; };
+		96C66A211BC905FA00D00F62 /* SpinLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinLock.swift; sourceTree = "<group>"; };
 		96E1DBEE1B19D58E000DBF49 /* SCAAtomic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCAAtomic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96E1DBF91B19D58E000DBF49 /* SCAAtomic Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SCAAtomic Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96E1DC271B19D8B6000DBF49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,6 +74,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		96C66A201BC905E600D00F62 /* Locks */ = {
+			isa = PBXGroup;
+			children = (
+				967751E61BBF1123008E30F9 /* Lockable.swift */,
+				967751E21BBF104A008E30F9 /* Mutex.swift */,
+				96C66A211BC905FA00D00F62 /* SpinLock.swift */,
+			);
+			name = Locks;
+			sourceTree = "<group>";
+		};
 		96E1DBE01B19D501000DBF49 = {
 			isa = PBXGroup;
 			children = (
@@ -84,8 +96,7 @@
 		96E1DBE71B19D54A000DBF49 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				967751E61BBF1123008E30F9 /* Lockable.swift */,
-				967751E21BBF104A008E30F9 /* Mutex.swift */,
+				96C66A201BC905E600D00F62 /* Locks */,
 				967751EB1BBF1B81008E30F9 /* Atomic.swift */,
 				967751EE1BBF2197008E30F9 /* PerformOnce.swift */,
 				96E1DC261B19D87F000DBF49 /* Supporting Files */,
@@ -238,6 +249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96C66A221BC905FA00D00F62 /* SpinLock.swift in Sources */,
 				967751E71BBF1123008E30F9 /* Lockable.swift in Sources */,
 				967751EF1BBF2197008E30F9 /* PerformOnce.swift in Sources */,
 				967751E31BBF104A008E30F9 /* Mutex.swift in Sources */,

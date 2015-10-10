@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'SCAAtomic'
-  s.version      = '0.0.1'
+  s.version      = '0.0.2'
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.summary      = 'A lightweight atomic wrapper in swift and C.'
   s.homepage     = 'https://github.com/seancatkinson/SCAAtomic'
@@ -11,6 +11,7 @@ Pod::Spec.new do |s|
   
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
+  s.tvos.deployment_target = '9.0'
 
   s.source_files = 'Source/*.swift'
   

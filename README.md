@@ -1,6 +1,6 @@
 # SCAAtomic
 
-A lightweight atomic wrapper in swift and C
+A lightweight atomic wrapper in swift and C for iOS, OSX & tvOS
 
 ## Features
 - [x] Atomic - Wrapper class with option to inject your own lock

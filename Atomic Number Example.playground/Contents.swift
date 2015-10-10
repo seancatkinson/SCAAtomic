@@ -52,5 +52,3 @@ print("Increment to 16 >-")
 atomicNumber.increment()
 print("\(atomicNumber.currentNumber())")
 print("Even Now? \(atomicNumber.isEven())")
-
-

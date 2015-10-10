@@ -28,6 +28,7 @@
 /// 
 public final class PerformOnce {
     
+    // private atomic store
     private var _done : Atomic<Bool>
     
     /// Check if the PerformOnce has been used yet

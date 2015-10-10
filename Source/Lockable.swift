@@ -32,4 +32,17 @@ public protocol Lockable {
     /// unlock as appropriate for the type
     func unlock()
     
+    /// perform
+    func performWhileLocked(@noescape closure:()->())
+    
+}
+
+extension Lockable {
+    
+    public func performWhileLocked(@noescape closure:()->()) {
+        self.lock()
+        defer { self.unlock() }
+        closure()        
+    }
+    
 }

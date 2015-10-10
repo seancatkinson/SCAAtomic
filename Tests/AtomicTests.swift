@@ -21,39 +21,67 @@ class AtomicTests: XCTestCase {
     }
 
     func testAtomicBlocksAccessWhilstLocked() {
-        let atomic = Atomic(0)
+        let atomic : Atomic<Int> = Atomic(0)
+        self.runTestWithAtomic(atomic, numberOfRuns: 100, numberToAdd: 2)
+    }
+    
+    func testPerformWithValue() {
+        let value = 0
+        let atomic = Atomic(value)
         let expectation1 = self.expectationWithDescription("1")
-        let expectation2 = self.expectationWithDescription("2")
+        atomic.performWithValue { current in
+            XCTAssertEqual(current, 0)
+            expectation1.fulfill()
+        }
+        
+        self.waitForExpectationsWithTimeout(0.1, handler: nil)
+    }
+    
+    func testSwapValue() {
+        let value = 0
+        let atomic = Atomic(value)
+        var value2 = 5
+        value2 = atomic.swapValueWith(value2)
+        
+        XCTAssertEqual(value2, value)
+        XCTAssertEqual(atomic.value, 5)
+    }
+    
+    func testSpinLock() {
+        let atomic : Atomic<Int> = Atomic(0, lock:SpinLock())
+        self.runTestWithAtomic(atomic, numberOfRuns: 100, numberToAdd: 2)
+    }
+    
+    
+    
+    
+    // MARK: - Helpers
+    func runTestWithAtomic(atomicStore:Atomic<Int>, numberOfRuns:Int, numberToAdd:Int) {
+        let expectedFinalValue = numberOfRuns*numberToAdd
         
         // concurrent queue so that we will be running at the same time
         let concurrentQueue = dispatch_queue_create("queue1", DISPATCH_QUEUE_CONCURRENT)
         
-        print("Dispatching 1")
-        dispatch_async(concurrentQueue) {
-            print("Will call 1")
-            let originalNumber = atomic.performAndReplace { current -> Int in                                
-                print("1: \(current)")
-                return 2
+        for i in 0..<numberOfRuns {
+            
+            let expectation1 = self.expectationWithDescription("\(i)")
+            
+            print("Dispatching \(i)")
+            dispatch_async(concurrentQueue) {
+                print("Will call \(i)")
+                atomicStore.performAndReplace { current -> Int in
+                    print("\(i): \(current)")
+                    return current + 2
+                }
+                print("Call \(i) finished")
+                expectation1.fulfill()
             }
-            print("Call 1 finished")
-            XCTAssertEqual(originalNumber, 0)
-            expectation1.fulfill()
         }
         
-        print("Dispatching 2")
-        dispatch_async(concurrentQueue) {
-            print("Will call 2")
-            let originalNumber = atomic.performAndReplace { current -> Int in
-                XCTAssertEqual(current, 2)
-                print("2: \(current)")
-                return 0
-            }
-            print("Call 2 finished")
-            XCTAssertEqual(originalNumber, 2)
-            expectation2.fulfill()
+        self.waitForExpectationsWithTimeout(2.5) { (maybeError) -> Void in
+            print("Final: \(atomicStore.value)")
+            XCTAssertEqual(atomicStore.value, expectedFinalValue)
         }
-        
-        self.waitForExpectationsWithTimeout(0.5, handler: nil)
     }
 
 }
